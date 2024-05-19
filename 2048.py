@@ -18,7 +18,7 @@ FONT = pygame.font.SysFont("arial", 40)
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("2048 Game")
 
-# Predefined colors for dynamic assignment
+# colors
 COLOR_PALETTE = [
     (238, 228, 218), (237, 224, 200), (242, 177, 121), (245, 149, 99),
     (246, 124, 95), (246, 94, 59), (237, 207, 114), (237, 204, 97),
@@ -26,7 +26,7 @@ COLOR_PALETTE = [
 ]
 TILE_COLORS = {}
 
-# Function to assign colors dynamically
+# color assignment
 def assign_colors(value):
     if value not in TILE_COLORS:
         if len(TILE_COLORS) < len(COLOR_PALETTE):
@@ -57,7 +57,7 @@ def add_new_tile(board, mode):
         row, col = random.choice(empty_tiles)
         board[row][col] = mode
 
-# legal move or not
+# to move or not to move
 def can_move(board):
     for row in range(BOARD_SIZE):
         for col in range(BOARD_SIZE):
@@ -70,13 +70,12 @@ def can_move(board):
     return False
 
 # movement
-# movement
 def move(board, direction, base_number):
     def merge(row, base_number):
         merged_row = [i for i in row if i != 0]
         for i in range(len(merged_row) - 1):
             if merged_row[i] == merged_row[i + 1]:
-                merged_row[i] *= base_number  # Multiply by the base number
+                merged_row[i] *= base_number
                 merged_row[i + 1] = 0
         merged_row = [i for i in merged_row if i != 0]
         while len(merged_row) < BOARD_SIZE:
@@ -183,10 +182,9 @@ def welcome_screen():
 
 
     base_number = input_box(pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 - 105, 200, 50), "Base Number")
-    #win_power = input_box(pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 + 40, 200, 50), "Win Power")
 
     #(attempt at difficulty buttons)
-    button_text_1 = FONT.render("Baby Mode", True, FONT_COLOR) # button difficulty
+    button_text_1 = FONT.render("Baby Mode", True, FONT_COLOR)
     button_rect_1 = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 - 25, 200, 50)
     pygame.draw.rect(SCREEN, (0, 0, 0), button_rect_1)
     button_text_1_rect = button_text_1.get_rect(center=button_rect_1.center)
@@ -243,7 +241,7 @@ def welcome_screen():
                     waiting = False
     return base_number, win_power
 
-
+# game
 def main():
     base_number, win_power = welcome_screen()
     win_value = base_number ** win_power
