@@ -70,12 +70,13 @@ def can_move(board):
     return False
 
 # movement
-def move(board, direction, mode):
-    def merge(row):
+# movement
+def move(board, direction, base_number):
+    def merge(row, base_number):
         merged_row = [i for i in row if i != 0]
         for i in range(len(merged_row) - 1):
             if merged_row[i] == merged_row[i + 1]:
-                merged_row[i] = merged_row[i] * (2 if mode == 2 else 3)
+                merged_row[i] *= base_number  # Multiply by the base number
                 merged_row[i + 1] = 0
         merged_row = [i for i in merged_row if i != 0]
         while len(merged_row) < BOARD_SIZE:
@@ -86,19 +87,19 @@ def move(board, direction, mode):
 
     if direction == 'left':
         for r in range(BOARD_SIZE):
-            new_row = merge(board[r])
+            new_row = merge(board[r], base_number)
             if new_row != board[r]:
                 moved = True
             board[r] = new_row
     elif direction == 'right':
         for r in range(BOARD_SIZE):
-            new_row = merge(board[r][::-1])[::-1]
+            new_row = merge(board[r][::-1], base_number)[::-1]
             if new_row != board[r]:
                 moved = True
             board[r] = new_row
     elif direction == 'up':
         for c in range(BOARD_SIZE):
-            col = merge([board[r][c] for r in range(BOARD_SIZE)])
+            col = merge([board[r][c] for r in range(BOARD_SIZE)], base_number)
             if col != [board[r][c] for r in range(BOARD_SIZE)]:
                 moved = True
             for r in range(BOARD_SIZE):
@@ -106,13 +107,14 @@ def move(board, direction, mode):
     elif direction == 'down':
         for c in range(BOARD_SIZE):
             original_col = [board[r][c] for r in range(BOARD_SIZE)]
-            new_col = merge(original_col[::-1])[::-1]
+            new_col = merge(original_col[::-1], base_number)[::-1]
             if new_col != original_col:
                 moved = True
             for r in range(BOARD_SIZE):
                 board[r][c] = new_col[r]
 
     return moved
+
 
 # game over
 def game_over_screen(win, mode):
