@@ -32,7 +32,7 @@ def assign_colors(value):
         if len(TILE_COLORS) < len(COLOR_PALETTE):
             TILE_COLORS[value] = COLOR_PALETTE[len(TILE_COLORS)]
         else:
-            TILE_COLORS[value] = COLOR_PALETTE[-1]  # Use a default color if palette is exhausted
+            TILE_COLORS[value] = COLOR_PALETTE[-1]  # color default
 
 # drawing
 def draw_board(board, mode):
